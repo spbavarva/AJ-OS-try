@@ -1,10 +1,8 @@
 # AJ OS
 
-![AJ OS Hero Banner](assets/hero-banner.png)
-
 **The specialized personal operating system for high-output builders.**
 
-AJ OS is a unified interface designed to consolidate the fragmented knowledge and execution workflows of creators, engineers, and founders. It moves beyond traditional productivity apps by treating your life's data as a single, integrated graph—connecting ideas to contacts, and daily logs to long-term missions.
+AJ OS is a unified interface designed to consolidate the fragmented knowledge and execution workflows of creators, engineers, and founders. It moves beyond traditional productivity apps by treating your life's data as a single, integrated graph: connecting ideas to contacts, and daily logs to long-term missions.
 
 ---
 
