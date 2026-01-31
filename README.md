@@ -2,193 +2,121 @@
 
 ![AJ OS Dashboard](assets/dashboard-preview.png)
 
-**A unified personal operating system for productivity-focused individuals.**
+**The specialized personal operating system for high-output builders.**
 
-AJ OS is a web application designed to consolidate the fragmented tools that builders, creators, and knowledge workers typically juggle. Instead of switching between a notes app, task manager, idea tracker, contact list, and analytics dashboard, AJ OS brings everything into a single, cohesive interface.
-
-The core philosophy is simple: capture everything, organize naturally, and execute without friction. Every feature is built around this principle, with an emphasis on speed, keyboard navigation, and zero cognitive overhead.
+AJ OS is a unified interface designed to consolidate the fragmented knowledge and execution workflows of creators, engineers, and founders. It moves beyond traditional productivity apps by treating your life's data as a single, integrated graph—connecting ideas to contacts, and daily logs to long-term missions.
 
 ---
 
-## Why This Exists
+## The Philosophy
 
-Most productivity systems fail for one of two reasons: they're either too simple to handle real complexity, or so feature-rich that using them becomes work itself. AJ OS aims for the middle ground, providing structure where it matters while staying out of your way everywhere else.
+Productivity systems often fail because of high friction or low capability. AJ OS is built on three core pillars:
 
-The system is opinionated about workflow. It assumes you think in terms of daily logs, weekly cycles, and long-running missions. It expects you to capture ideas immediately and revisit them later. It treats contacts as valuable context, not just phone numbers.
-
-If that matches how you work, this might be useful. If not, the codebase is open and straightforward to modify.
+1. **Zero-Latency Capture**: Moving a thought from your mind to the system should happen in milliseconds, not minutes.
+2. **Contextual Continuity**: Your tasks should know about your logs, and your ideas should live alongside your network.
+3. **Data Sovereignty**: Your data remains yours. AJ OS prioritizes local-first storage with optional cloud synchronization via Supabase.
 
 ---
 
-## Features
+## Core Modules
 
 ### Command Center
-The dashboard. Shows today's priorities, recent ideas, and quick-access to everything else. Designed to answer "what should I focus on right now?" in under two seconds.
+An executive overview of your current state. The Command Center surfaces active missions, recent insights, and captures the velocity of your work. It is the tactical starting point for every session.
 
-### Mission Control
-Task management with deadlines, priorities, and status tracking. Supports pinning critical tasks to the top, filtering by completion state, and tracking when tasks were actually finished (not just marked done).
+### Mission Control (Task Engine)
+Mission Control handles execution. It implements a sophisticated task management system with priority weighting, deadline tracking, and a completion auditing system that logs the exact moment of progress.
 
 ### Idea Inbox
-A capture zone for thoughts, content drafts, and future projects. Categorize by type (Content, Product, Deep Work, Life, Growth), mark urgency levels, and track which ideas have been executed. Built with dedicated support for social content (X/LinkedIn).
+A high-fidelity capture zone for intellectual capital. Unlike simple note-takers, the Idea Inbox supports categorization by domain (Product, Content, Growth), urgency filtering, and platform-specific metadata for X and LinkedIn.
 
-### Daily Logs
-Structured journaling. Each entry captures what you worked on and what you shipped. Designed for quick daily entries that build into a valuable historical record.
-
-### Discoveries
-A repository for external knowledge. Save articles, tools, resources, and references with impact ratings. Think of it as bookmarks that you'll actually use.
+### Daily Capture
+A chronological audit of your output. Daily Capture allows you to log what you worked on and what you shipped, creating a searchable history of your professional growth and technical contributions.
 
 ### Network Node
-Contact management for professionals. Stores role, company, LinkedIn, X handle, email, and personal notes. Built for networking, not just storing phone numbers.
+A relational CRM for professional networks. Track roles, companies, social footprints, and meeting notes. It treats your relationships as a core component of your productivity infrastructure.
 
-### Insights
-Analytics on your own behavior. Tracks logging streaks, task completion rates, idea execution, and weekly patterns. All computed locally from your data.
+### Discovery Engine
+A centralized repository for external resources. The Discovery Engine captures URLs and knowledge assets, allowing you to rank them by impact and integrate them into your active workflows.
 
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|------------|
-| Framework | React 19 with TypeScript |
-| Styling | Tailwind CSS |
-| Database | Supabase (PostgreSQL with Row Level Security) |
-| Build Tool | Vite |
-| Mobile | Capacitor (optional, for iOS/Android compilation) |
-
-The architecture follows an offline-first pattern. All data is cached to localStorage immediately, then synced to Supabase when available. If the sync fails, the local cache serves as the source of truth and changes are retried later.
+### Analytics & Insights
+Local-first data processing that identifies behavioral patterns. It tracks streaks, completion ratios, and capture rates to provide a brutal, evidence-based view of your productivity.
 
 ---
 
-## Getting Started
+## Technical Architecture
 
-### Prerequisites
+AJ OS is built with a modern, type-safe stack designed for performance and reliability.
 
-- Node.js 18 or higher
-- npm (comes with Node.js)
-- A Supabase account (free tier works fine)
+| Stack | Selection | Rationale |
+| :--- | :--- | :--- |
+| **Framework** | React 19 / TypeScript | Uncompromising type safety and state management. |
+| **Foundation** | Vite | Instant HMR and optimized production builds. |
+| **Database** | Supabase (PostgreSQL) | Enterprise-grade persistence with Row Level Security. |
+| **Interface** | Tailwind CSS | Utility-first styling for a custom, low-overhead UI. |
+| **Native** | Capacitor | Ready for deployment to iOS and Android. |
 
-### Installation
+---
 
-Clone the repository:
+## Quick Start
+
+### 1. Environment Configuration
+
+Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/your-username/aj-os.git
-cd aj-os
-```
-
-Install dependencies:
-
-```bash
+git clone https://github.com/AadityasinhJadeja/AJ-OS.git
+cd AJ-OS
 npm install
 ```
 
-### Configuration
-
-Copy the example environment file:
+Copy the environment template:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Open `.env.local` and add your Supabase credentials:
+### 2. Database Integration (Optional)
 
-```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
+AJ OS runs in **Local-Only Mode** by default. To enable cross-device synchronization:
 
-To get these values:
-1. Create a project at [supabase.com](https://supabase.com)
-2. Go to Project Settings, then API
-3. Copy the Project URL and the `anon` public key
+1. Initialize a project at [Supabase](https://supabase.com).
+2. Execute the schema found in `docs/database/SUPABASE_SCHEMA_CURRENT.sql` via the SQL Editor.
+3. Populate `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in your `.env.local` file.
 
-### Database Setup
-
-In your Supabase dashboard, open the SQL Editor and run the schema file:
-
-```
-docs/database/SUPABASE_SCHEMA_CURRENT.sql
-```
-
-This creates all required tables with Row Level Security policies.
-
-### Running Locally
-
-Start the development server:
+### 3. Execution
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+The system will be accessible at `http://localhost:3000`.
 
-### Building for Production
+---
 
-```bash
-npm run build
+## Project Organization
+
+```text
+src/
+├── components/      # Modular UI components
+├── lib/             # Core engines: storage, database, security
+├── config/          # Centralized configuration and feature flags
+├── styles/          # Design system and typography
+└── App.tsx          # Router and application logic
+
+docs/
+└── database/        # SQL schemas and migration history
 ```
 
-Output goes to the `dist/` directory, ready for deployment to any static host.
+For more in-depth technical details, refer to the `SECURITY.md` and the database README.
 
 ---
 
-## Project Structure
+## Contribution
 
-```
-aj-os/
-├── src/
-│   ├── components/      # React components for each module
-│   ├── lib/             # Core utilities (storage, database, security)
-│   ├── config/          # Application configuration
-│   ├── styles/          # Global CSS
-│   ├── App.tsx          # Main application shell
-│   └── index.tsx        # Entry point
-├── docs/
-│   └── database/        # SQL schemas and migrations
-├── index.html           # HTML template
-├── vite.config.ts       # Build configuration
-└── package.json         # Dependencies
-```
-
-### Key Files
-
-- `src/lib/store.ts` - The storage engine. Handles all data operations with localStorage caching and Supabase sync.
-- `src/lib/supabase.ts` - Database client configuration.
-- `src/lib/security.ts` - Input sanitization and rate limiting.
-- `src/config/index.ts` - Centralized configuration and feature flags.
-
----
-
-## Running Without Supabase
-
-If you skip the Supabase setup, the app runs in local-only mode. All data is stored in the browser's localStorage. This is fine for trying things out, but note that:
-
-- Data is tied to a single browser
-- Clearing browser data deletes everything
-- No sync between devices
-
-The app will display a "STORAGE LOCAL ONLY" indicator when running in this mode.
-
----
-
-## Security
-
-All user inputs are sanitized before storage to prevent XSS and injection attacks. Database operations are rate-limited. Environment variables are used exclusively for sensitive credentials.
-
-Supabase Row Level Security policies ensure that each user can only access their own data. The anon key used in the frontend is safe to expose, as RLS policies enforce access control at the database level.
-
-See `SECURITY.md` for detailed information.
-
----
-
-## Contributing
-
-Pull requests are welcome. For significant changes, please open an issue first to discuss the approach.
-
-The codebase is intentionally straightforward. Components are self-contained, the store is a single file, and there's minimal abstraction. This is by design, to keep the system understandable and modifiable.
+Contributions are prioritized based on system stability and workflow enhancement. Please ensure all pull requests contain updated TypeScript interfaces and maintain the zero-dependency styling approach.
 
 ---
 
 ## License
 
-MIT
+MIT License. Designed to be open, modified, and shared.
