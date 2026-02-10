@@ -1,5 +1,5 @@
 
-export type Category = 'Content' | 'Product' | 'Deep_Work' | 'Life' | 'Growth';
+export type Category = 'Content' | 'Blog' | 'Product' | 'Deep_Work' | 'Life' | 'Growth' | 'Random';
 export type Urgency = 'Low' | 'Medium' | 'High';
 
 export interface DailyEntry {
@@ -19,7 +19,7 @@ export interface Idea {
   category: Category;
   urgency: Urgency;
   status: 'Inbox' | 'Archived' | 'Approved';
-  platform?: 'X' | 'LinkedIn'; // For Content ideas
+  platform?: 'X' | 'LinkedIn' | 'YouTube'; // For Content ideas
   executed?: boolean; // Track if idea was successfully completed
   pinned?: boolean; // Track if idea is pinned for quick access
   traceDate: string;

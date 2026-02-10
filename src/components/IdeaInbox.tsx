@@ -163,7 +163,8 @@ const EditableIdea: React.FC<{
                 <div className="flex gap-2">
                   {[
                     { label: '𝕏 (Twitter)', value: 'X' as const },
-                    { label: 'LinkedIn', value: 'LinkedIn' as const }
+                    { label: 'LinkedIn', value: 'LinkedIn' as const },
+                    { label: 'YouTube', value: 'YouTube' as const }
                   ].map(platform => (
                     <button
                       key={platform.value}
@@ -296,7 +297,7 @@ export const IdeaInbox: React.FC = () => {
     thought: '',
     category: 'Content' as Category,
     urgency: 'Medium' as Urgency,
-    platform: undefined as 'X' | 'LinkedIn' | undefined,
+    platform: undefined as 'X' | 'LinkedIn' | 'YouTube' | undefined,
     executed: false,
   });
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -379,10 +380,11 @@ export const IdeaInbox: React.FC = () => {
 
   const categories: { label: string; value: Category; icon?: string }[] = [
     { label: 'Content', value: 'Content', icon: '' },
-    { label: 'Product', value: 'Product' },
+    { label: 'Blog', value: 'Blog' },
     { label: 'Deep Work', value: 'Deep_Work' },
     { label: 'Life', value: 'Life' },
     { label: 'Growth', value: 'Growth' },
+    { label: 'Random', value: 'Random' },
   ];
 
   return (
@@ -526,7 +528,8 @@ export const IdeaInbox: React.FC = () => {
                 <div className="flex gap-2">
                   {[
                     { label: '𝕏 (Twitter)', value: 'X' as const },
-                    { label: 'LinkedIn', value: 'LinkedIn' as const }
+                    { label: 'LinkedIn', value: 'LinkedIn' as const },
+                    { label: 'YouTube', value: 'YouTube' as const }
                   ].map(platform => (
                     <button
                       key={platform.value}

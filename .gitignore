@@ -43,3 +43,4 @@ android/
 # Misc
 *.pem
 .gemini/
+.vercel
