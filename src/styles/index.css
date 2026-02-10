@@ -55,6 +55,38 @@
     --glass-blur: blur(16px);
 }
 
+.dark {
+    --bg-deep: #020617;
+    --bg-surface: rgba(15, 23, 42, 0.95);
+    --bg-surface-solid: #0f172a;
+    --bg-card: #0f172a;
+    --bg-card-hover: #1e293b;
+    --bg-input: #1e293b;
+    --bg-input-focus: #0f172a;
+
+    --accent-primary: #2dd4bf; 
+    --accent-secondary: #fb923c;
+    --accent-success: #4ade80;
+    --accent-wisdom: #c084fc;
+
+    --text-main: #f8fafc;
+    --text-dim: #cbd5e1;
+    --text-dimmer: #94a3b8;
+    --text-inverse: #020617;
+
+    --border-soft: rgba(30, 41, 59, 0.5);
+    --border-card: rgba(148, 163, 184, 0.1);
+    --border-hover: rgba(148, 163, 184, 0.2);
+    --border-focus: #2dd4bf;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+    --shadow-hover: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+
+    --sidebar-bg: rgba(2, 6, 23, 0.8);
+}
+
 body {
     margin: 0;
     background-color: var(--bg-deep);

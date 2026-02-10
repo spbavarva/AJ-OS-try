@@ -4,9 +4,11 @@ import { SupabaseStatus } from './SupabaseStatus';
 interface MobileNavProps {
     activeView: string;
     setView: (view: any) => void;
+    theme: 'light' | 'dark';
+    toggleTheme: () => void;
 }
 
-export const MobileNav: React.FC<MobileNavProps> = ({ activeView, setView }) => {
+export const MobileNav: React.FC<MobileNavProps> = ({ activeView, setView, theme, toggleTheme }) => {
     const [showMore, setShowMore] = useState(false);
 
     // Main navigation items (shown in bottom bar)
@@ -42,8 +44,23 @@ export const MobileNav: React.FC<MobileNavProps> = ({ activeView, setView }) => 
                     }`}
             >
                 <div className="mx-4 mb-2 glass-panel rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
-                    <div className="p-4 border-b border-white/5 bg-white/5">
+                    <div className="p-4 border-b border-white/5 bg-white/5 flex items-center justify-between">
                         <SupabaseStatus />
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2.5 rounded-xl bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 transition-all border border-white/10"
+                            title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+                        >
+                            {theme === 'light' ? (
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                </svg>
+                            ) : (
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M16.95 16.95l.707.707M7.636 7.636l.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            )}
+                        </button>
                     </div>
                     <div className="grid grid-cols-2 gap-1 p-2">
                         {moreItems.map((item) => (

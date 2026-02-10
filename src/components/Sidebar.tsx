@@ -4,9 +4,11 @@ import { SupabaseStatus } from './SupabaseStatus';
 interface SidebarProps {
   activeView: string;
   setView: (view: any) => void;
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeView, setView }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ activeView, setView, theme, toggleTheme }) => {
   // 1. PRIME DIRECTIVE: The critical mission-focused tabs
   const coreItems = [
     { id: 'dashboard', label: 'Command Center', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -27,9 +29,27 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeView, setView }) => {
 
       {/* Header */}
       <div className="p-8 pb-6">
-        <div className="flex items-center space-x-3 text-sky-500/90">
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z" /></svg>
-          <h1 className="text-xl font-black tracking-tight font-heading text-slate-800">AJ OS <span className="text-sky-500">26</span></h1>
+        <div className="flex items-center justify-between text-sky-500/90">
+          <div className="flex items-center space-x-3">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z" /></svg>
+            <h1 className="text-xl font-black tracking-tight font-heading text-slate-800 dark:text-slate-100">AJ OS <span className="text-sky-500">26</span></h1>
+          </div>
+
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-700 ring-1 ring-white/10"
+            title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+          >
+            {theme === 'light' ? (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M16.95 16.95l.707.707M7.636 7.636l.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
 
