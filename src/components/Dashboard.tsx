@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Storage } from '../lib/store';
 import { Todo, Idea, DailyEntry, WeeklyOutcome, Discovery, Contact, TodoPriority, TimeSlot, TodoStatus } from '../lib/types';
+import { getLocalDate } from '../lib/date';
 import { CustomDatePicker } from './CustomDatePicker';
 import { CustomTimePicker } from './CustomTimePicker';
 
@@ -333,7 +334,7 @@ export const Dashboard: React.FC<{ setView: (v: any) => void }> = ({ setView }) 
   const [updateSaving, setUpdateSaving] = useState(false);
 
   const loadAllData = async () => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getLocalDate();
     try {
       const [todos, ideas, dailies, weekly, discoveries, contacts] = await Promise.all([
         Storage.fetchTodos(),
@@ -400,7 +401,7 @@ export const Dashboard: React.FC<{ setView: (v: any) => void }> = ({ setView }) 
     const updated = { ...todo, completed: !todo.completed, status: (!todo.completed ? 'Completed' : 'Pending') as any };
     await Storage.updateTodo(updated);
 
-    const today = new Date().toISOString().split('T')[0];
+    const today = getLocalDate();
     setTodayTodos(prev => prev.filter(t => t.id !== todo.id));
     setOverdueTodos(prev => prev.filter(t => t.id !== todo.id));
     setPinnedTodos(prev => prev.filter(t => t.id !== todo.id));
@@ -515,7 +516,7 @@ export const Dashboard: React.FC<{ setView: (v: any) => void }> = ({ setView }) 
                   todo={todo}
                   onToggle={toggleComplete}
                   onEdit={(t) => setEditingTodoId(t.id)}
-                  isOverdue={todo.deadline < new Date().toISOString().split('T')[0]}
+                  isOverdue={todo.deadline < getLocalDate()}
                 />
               )
             ))}

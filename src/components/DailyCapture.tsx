@@ -3,6 +3,7 @@ import { SupabaseStatus } from './SupabaseStatus';
 import { Storage } from '../lib/store';
 import { DailyEntry } from '../lib/types';
 import { useConfirm } from './ConfirmModal';
+import { getLocalDate, parseLocalDate } from '../lib/date';
 
 // Inline editable entry component with better UX
 const EditableEntry: React.FC<{
@@ -82,7 +83,7 @@ const EditableEntry: React.FC<{
                 type="date"
                 value={editDate}
                 onChange={(e) => setEditDate(e.target.value)}
-                max={new Date().toISOString().split('T')[0]}
+                max={getLocalDate()}
                 className="px-3 py-1.5 rounded-lg text-[9px] font-black mono uppercase tracking-widest bg-sky-500/5 text-zinc-400 border border-sky-500/20 hover:border-sky-500/40 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all cursor-pointer"
               />
             </div>
@@ -269,7 +270,7 @@ const EditableEntry: React.FC<{
 
 export const DailyCapture: React.FC = () => {
   const [entries, setEntries] = useState<DailyEntry[]>([]);
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState(getLocalDate());
   const [formData, setFormData] = useState({
     workedOn: '',
     shipped: '',
@@ -393,13 +394,13 @@ export const DailyCapture: React.FC = () => {
   };
 
   const formatDateLabel = (dateStr: string) => {
-    const date = new Date(dateStr);
+    const date = parseLocalDate(dateStr);
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
 
-    const todayStr = today.toISOString().split('T')[0];
-    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    const todayStr = getLocalDate(today);
+    const yesterdayStr = getLocalDate(yesterday);
 
     if (dateStr === todayStr) return "Today";
     if (dateStr === yesterdayStr) return "Yesterday";
@@ -414,7 +415,7 @@ export const DailyCapture: React.FC = () => {
     for (let i = 0; i < 7; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = getLocalDate(date);
       const hasEntry = entries.some(e => e.date === dateStr);
 
       let label = '';
@@ -493,7 +494,7 @@ export const DailyCapture: React.FC = () => {
             <span className="text-[10px] font-black mono uppercase tracking-widest text-sky-400">{entries.length} Logs</span>
           </div>
         </div>
-        {entries.some(e => e.date === new Date().toISOString().split('T')[0]) && (
+        {entries.some(e => e.date === getLocalDate()) && (
           <div className="glass-card px-6 py-3 rounded-2xl border border-emerald-500/20">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
@@ -548,7 +549,7 @@ export const DailyCapture: React.FC = () => {
                     type="date"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
-                    max={new Date().toISOString().split('T')[0]}
+                    max={getLocalDate()}
                     className="px-3 py-2 rounded-xl text-[9px] font-black mono uppercase tracking-widest bg-white/5 text-zinc-400 border border-white/5 hover:bg-white/10 transition-all cursor-pointer"
                   />
                 </div>

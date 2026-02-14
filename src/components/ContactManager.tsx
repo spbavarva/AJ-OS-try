@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Storage } from '../lib/store';
 import { Contact } from '../lib/types';
+import { getLocalDate } from '../lib/date';
 import { useConfirm } from './ConfirmModal';
 
 // Inline editable contact component
@@ -374,7 +375,7 @@ export const ContactManager: React.FC = () => {
 
     setSaving(true);
     try {
-      const now = new Date().toISOString().split('T')[0];
+      const now = getLocalDate();
 
       const combinedCompany = formData.role && formData.company
         ? `${formData.role} at ${formData.company}`

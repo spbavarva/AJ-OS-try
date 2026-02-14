@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Storage } from '../lib/store';
 import { Idea, Category, Urgency } from '../lib/types';
 import { useConfirm } from './ConfirmModal';
+import { getLocalDate } from '../lib/date';
 
 // Inline editable idea component
 const EditableIdea: React.FC<{
@@ -319,7 +320,7 @@ export const IdeaInbox: React.FC = () => {
 
     setSaving(true);
     try {
-      const now = new Date().toISOString().split('T')[0];
+      const now = getLocalDate();
       const newIdea: Idea = {
         id: crypto.randomUUID(),
         date: now,

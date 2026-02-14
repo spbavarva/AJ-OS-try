@@ -3,6 +3,7 @@
 import { supabase, isSupabaseConfigured } from './supabase';
 import { DailyEntry, Idea, WeeklyOutcome, Todo, DecisionGate, Contact, Discovery, Expense } from './types';
 import { sanitizeText, sanitizeUrl, sanitizeEmail, rateLimiter } from './security';
+import { getLocalDate } from './date';
 
 // Local cache keys for offline support
 const CACHE_KEYS = {
@@ -104,7 +105,7 @@ export const Storage = {
   saveDailyEntry: async (entry: DailyEntry): Promise<void> => {
     if (!checkRateLimit() || !ensureConfigured()) return;
 
-    const traceDate = entry.traceDate || new Date().toISOString().split('T')[0];
+    const traceDate = entry.traceDate || getLocalDate();
     const sanitizedEntry: DailyEntry = {
       ...entry,
       workedOn: sanitizeText(entry.workedOn),
@@ -238,7 +239,7 @@ export const Storage = {
   saveIdea: async (idea: Idea): Promise<void> => {
     if (!checkRateLimit() || !ensureConfigured()) return;
 
-    const traceDate = idea.traceDate || new Date().toISOString().split('T')[0];
+    const traceDate = idea.traceDate || getLocalDate();
     const sanitizedIdea: Idea = {
       ...idea,
       thought: sanitizeText(idea.thought),
@@ -341,7 +342,7 @@ export const Storage = {
   saveWeeklyOutcome: async (outcome: WeeklyOutcome): Promise<void> => {
     if (!checkRateLimit() || !ensureConfigured()) return;
 
-    const traceDate = outcome.traceDate || new Date().toISOString().split('T')[0];
+    const traceDate = outcome.traceDate || getLocalDate();
     const sanitizedOutcome: WeeklyOutcome = {
       ...outcome,
       build: sanitizeText(outcome.build),
@@ -433,7 +434,7 @@ export const Storage = {
       status: row.status,
       completed: row.completed,
       createdAt: row.created_at,
-      traceDate: row.trace_date || row.created_at?.split('T')[0] || new Date().toISOString().split('T')[0],
+      traceDate: row.trace_date || (row.created_at ? getLocalDate(new Date(row.created_at)) : getLocalDate()),
       timeSlot: row.time_slot,
       targetTime: row.target_time,
       pinned: row.pinned || false,
@@ -447,7 +448,7 @@ export const Storage = {
   saveTodo: async (todo: Todo): Promise<void> => {
     if (!checkRateLimit() || !ensureConfigured()) return;
 
-    const traceDate = todo.traceDate || new Date().toISOString().split('T')[0];
+    const traceDate = todo.traceDate || getLocalDate();
     const sanitizedTodo: Todo = {
       ...todo,
       title: sanitizeText(todo.title),
@@ -554,7 +555,7 @@ export const Storage = {
   saveDecision: async (decision: DecisionGate): Promise<void> => {
     if (!checkRateLimit() || !ensureConfigured()) return;
 
-    const traceDate = decision.traceDate || new Date().toISOString().split('T')[0];
+    const traceDate = decision.traceDate || getLocalDate();
     const sanitizedDecision: DecisionGate = {
       ...decision,
       decision: sanitizeText(decision.decision),
@@ -651,7 +652,7 @@ export const Storage = {
   saveContact: async (contact: Contact): Promise<void> => {
     if (!checkRateLimit() || !ensureConfigured()) return;
 
-    const traceDate = contact.traceDate || new Date().toISOString().split('T')[0];
+    const traceDate = contact.traceDate || getLocalDate();
     const sanitizedContact: Contact = {
       ...contact,
       name: sanitizeText(contact.name),
@@ -761,7 +762,7 @@ export const Storage = {
   saveDiscovery: async (discovery: Discovery): Promise<void> => {
     if (!checkRateLimit() || !ensureConfigured()) return;
 
-    const traceDate = discovery.traceDate || new Date().toISOString().split('T')[0];
+    const traceDate = discovery.traceDate || getLocalDate();
     const sanitizedDiscovery: Discovery = {
       ...discovery,
       title: sanitizeText(discovery.title),

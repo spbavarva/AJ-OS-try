@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Storage } from '../lib/store';
 import { DailyEntry, Todo, Idea, Discovery, Contact, WeeklyOutcome } from '../lib/types';
+import { getLocalDate } from '../lib/date';
 
 // AJ OS Insights Start Date - All data before this is ignored
 const SYSTEM_START_DATE = '2026-01-12';
@@ -68,7 +69,7 @@ export const Insights: React.FC = () => {
     };
 
     // Helper: Format date as YYYY-MM-DD
-    const formatDate = (date: Date): string => date.toISOString().split('T')[0];
+    const formatDate = (date: Date): string => getLocalDate(date);
 
     // Helper: Get week label
     const getWeekLabel = (weekStart: Date): string => {
@@ -343,7 +344,7 @@ export const Insights: React.FC = () => {
             const daysLogged = weekDates.filter(d => dailyLogs.some(l => l.date === d)).length;
 
             const tasksCreated = todos.filter(t =>
-                weekDates.includes(t.traceDate || '') || weekDates.includes(t.createdAt?.split('T')[0] || '')
+                weekDates.includes(t.traceDate || '') || weekDates.includes(t.createdAt ? getLocalDate(new Date(t.createdAt)) : '')
             ).length;
             const tasksCompleted = todos.filter(t =>
                 t.completed && (weekDates.includes(t.deadline) || weekDates.includes(t.traceDate || ''))

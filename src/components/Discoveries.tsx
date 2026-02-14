@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Storage } from '../lib/store';
 import { Discovery, DiscoveryImpact } from '../lib/types';
+import { getLocalDate } from '../lib/date';
 import { useConfirm } from './ConfirmModal';
 
 // Inline editable discovery component - Elegant List Row Version
@@ -383,7 +384,7 @@ export const Discoveries: React.FC = () => {
 
     setSaving(true);
     try {
-      const now = new Date().toISOString().split('T')[0];
+      const now = getLocalDate();
       const newDiscovery: Discovery = {
         id: crypto.randomUUID(),
         dateAdded: now,

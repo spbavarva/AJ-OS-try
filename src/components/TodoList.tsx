@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Storage } from '../lib/store';
 import { Todo, TodoPriority, TodoStatus, TimeSlot } from '../lib/types';
 import { useConfirm } from './ConfirmModal';
+import { getLocalDate, parseLocalDate } from '../lib/date';
 import { CustomDatePicker } from './CustomDatePicker';
 import { CustomTimePicker } from './CustomTimePicker';
 
@@ -418,7 +419,7 @@ export const TodoList: React.FC = () => {
                 status: 'Pending',
                 completed: false,
                 createdAt: now,
-                traceDate: now.split('T')[0],
+                traceDate: getLocalDate(),
             };
             await Storage.saveTodo(newTodo);
             setTodos([newTodo, ...todos]);
@@ -490,7 +491,7 @@ export const TodoList: React.FC = () => {
     };
 
     const getFilteredTodos = () => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDate();
         let filtered = todos;
 
         switch (filter) {
@@ -511,7 +512,7 @@ export const TodoList: React.FC = () => {
         if (completedDateFilter && filter === 'completed') {
             filtered = filtered.filter(t => {
                 if (!t.completedAt) return false;
-                const completedDate = new Date(t.completedAt).toISOString().split('T')[0];
+                const completedDate = getLocalDate(new Date(t.completedAt));
                 return completedDate === completedDateFilter;
             });
         }
@@ -521,7 +522,7 @@ export const TodoList: React.FC = () => {
 
     // Group todos by date - separate pending and completed
     const groupTodosByDate = (todoList: Todo[]) => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = getLocalDate();
 
         // Separate pending and completed
         const pendingTodos = todoList.filter(t => !t.completed);
@@ -612,7 +613,7 @@ export const TodoList: React.FC = () => {
             const completedGroups: { [key: string]: Todo[] } = {};
             completedTodos.forEach(todo => {
                 const dateKey = todo.completedAt
-                    ? new Date(todo.completedAt).toISOString().split('T')[0]
+                    ? getLocalDate(new Date(todo.completedAt))
                     : 'unknown';
                 if (!completedGroups[dateKey]) {
                     completedGroups[dateKey] = [];
@@ -652,8 +653,8 @@ export const TodoList: React.FC = () => {
 
     const filteredTodos = getFilteredTodos();
     const groupedTodos = groupTodosByDate(filteredTodos);
-    const todayCount = todos.filter(t => t.deadline === new Date().toISOString().split('T')[0] && !t.completed).length;
-    const overdueCount = todos.filter(t => t.deadline < new Date().toISOString().split('T')[0] && !t.completed).length;
+    const todayCount = todos.filter(t => t.deadline === getLocalDate() && !t.completed).length;
+    const overdueCount = todos.filter(t => t.deadline < getLocalDate() && !t.completed).length;
 
     const formatDateHeader = (dateStr: string, isOverdue: boolean, isToday: boolean, isCompleted?: boolean, isPinned?: boolean) => {
         if (isPinned || dateStr === 'pinned') return 'Pinned';
@@ -663,25 +664,25 @@ export const TodoList: React.FC = () => {
             if (dateStr === 'unknown' || dateStr === 'completed') {
                 return 'Completed (Date Unknown)';
             }
-            const date = new Date(dateStr);
+            const date = parseLocalDate(dateStr);
             const today = new Date();
-            const todayStr = today.toISOString().split('T')[0];
+            const todayStr = getLocalDate(today);
             const yesterday = new Date(today);
             yesterday.setDate(yesterday.getDate() - 1);
-            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            const yesterdayStr = getLocalDate(yesterday);
 
             if (dateStr === todayStr) return 'Completed Today';
             if (dateStr === yesterdayStr) return 'Completed Yesterday';
             return `Completed on ${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}`;
         }
 
-        const date = new Date(dateStr);
+        const date = parseLocalDate(dateStr);
         const today = new Date();
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
 
-        const todayStr = today.toISOString().split('T')[0];
-        const tomorrowStr = tomorrow.toISOString().split('T')[0];
+        const todayStr = getLocalDate(today);
+        const tomorrowStr = getLocalDate(tomorrow);
 
         if (dateStr === todayStr) return 'Today';
         if (dateStr === tomorrowStr) return 'Tomorrow';
@@ -690,7 +691,7 @@ export const TodoList: React.FC = () => {
         return `${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}`;
     };
 
-    const isOverdue = (deadline: string) => deadline < new Date().toISOString().split('T')[0];
+    const isOverdue = (deadline: string) => deadline < getLocalDate();
 
     return (
         <div className="space-y-8 animate-slide-up">

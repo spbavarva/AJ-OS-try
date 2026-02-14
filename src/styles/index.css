@@ -64,7 +64,7 @@
     --bg-input: #1e293b;
     --bg-input-focus: #0f172a;
 
-    --accent-primary: #2dd4bf; 
+    --accent-primary: #2dd4bf;
     --accent-secondary: #fb923c;
     --accent-success: #4ade80;
     --accent-wisdom: #c084fc;
@@ -281,8 +281,17 @@ button:active {
 
 /* Inline Edit Mode Animation */
 @keyframes pulse-border {
-    0%, 100% { border-color: rgba(14, 165, 233, 0.5); box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); }
-    50% { border-color: rgba(14, 165, 233, 0.8); box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
+
+    0%,
+    100% {
+        border-color: rgba(14, 165, 233, 0.5);
+        box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4);
+    }
+
+    50% {
+        border-color: rgba(14, 165, 233, 0.8);
+        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    }
 }
 
 .animate-pulse-border {
@@ -291,8 +300,15 @@ button:active {
 
 /* Staggered Entry Animations - The "System Boot" Feel */
 @keyframes slide-up-fade {
-    from { opacity: 0; transform: translateY(12px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .animate-slide-up {
@@ -300,23 +316,42 @@ button:active {
 }
 
 /* Stagger Delays for children */
-.stagger-1 { animation-delay: 50ms; }
-.stagger-2 { animation-delay: 100ms; }
-.stagger-3 { animation-delay: 150ms; }
-.stagger-4 { animation-delay: 200ms; }
-.stagger-5 { animation-delay: 250ms; }
+.stagger-1 {
+    animation-delay: 50ms;
+}
+
+.stagger-2 {
+    animation-delay: 100ms;
+}
+
+.stagger-3 {
+    animation-delay: 150ms;
+}
+
+.stagger-4 {
+    animation-delay: 200ms;
+}
+
+.stagger-5 {
+    animation-delay: 250ms;
+}
 
 /* Premium Shimmer for Loading States */
 @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
 }
 
 .animate-shimmer {
-    background: linear-gradient(90deg, 
-        rgba(255,255,255, 0) 0%, 
-        rgba(255,255,255, 0.4) 50%, 
-        rgba(255,255,255, 0) 100%);
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0) 100%);
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
 }
@@ -329,7 +364,7 @@ button:active {
     left: -100%;
     width: 50%;
     height: 100%;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
     transform: skewX(-25deg);
     transition: 0.5s;
     pointer-events: none;
@@ -341,12 +376,19 @@ button:active {
 }
 
 /* Custom Scrollbar for Time Picker */
-.custom-scrollbar::-webkit-scrollbar { width: 5px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { 
-    background: rgba(148, 163, 184, 0.3); 
-    border-radius: 10px; 
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
 }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { 
-    background: rgba(148, 163, 184, 0.5); 
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.5);
 }
